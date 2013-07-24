@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<EmailConfig>
+
+  <!--网站标题-->
+  <EmailTitle>Congratulation, you have successfully register to ISABC12, the following message is your infomation.</EmailTitle>
+
+  <!--邮件smtp服务器-->
+  <EmailHost>smtp.sysu.edu.cn</EmailHost>
+
+  <!--发送方邮箱账号-->
+  <EmailAccount>isabc12</EmailAccount>
+
+  <!--发送方邮箱密码-->
+  <EmailPwd>zmzzql</EmailPwd>
+
+  <!--发送方邮箱密码-->
+  <EmailFrom>isabc12@mail.sysu.edu.cn</EmailFrom>
+
+</EmailConfig>

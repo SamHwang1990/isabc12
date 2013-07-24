@@ -109,12 +109,14 @@ public partial class User_RegHandler : System.Web.UI.Page
 
         if (UserBll.Add(UserEntity))
         {
+            HandlerMessage.Succeed = true;
+            HandlerMessage.Text = "Register successfully!";
             //更新剩余的房间数
             hotelData.RoomRemain = hotelData.RoomRemain - BookingRoom;
             if (hotelBll.Edit(hotelData))
             {
                 HandlerMessage.Succeed = true;
-                HandlerMessage.Text = "HotelInfo alter successed!";
+                //HandlerMessage.Text = "HotelInfo alter successed!";
 
                 SysUserData entity = UserBll.GetDataByName(UserEntity.Name);
 
@@ -131,6 +133,12 @@ public partial class User_RegHandler : System.Web.UI.Page
                     OutputXml(HandlerMessage);
                 }
             }
+            else
+            {
+                HandlerMessage.Succeed = false;
+                HandlerMessage.Text += "HotelInfo modifying failed!";
+                OutputXml(HandlerMessage);
+            }
         }
         else
         {
@@ -144,23 +152,26 @@ public partial class User_RegHandler : System.Web.UI.Page
     {
         //根据用户输入来设置邮件正文
         StringBuilder sb = new StringBuilder();
-        sb.Append("Hello " + user.Name + "! <br />");
-        sb.Append("Your ID is " + user.UserID + ".<br />");
-        sb.Append("The Category of Participation you chose is " + user.Participation + ", the number of accompanying people you chose is  " + user.Accompanying.ToString() + ", and the total amount of registration fee is " + user.TotalFee.ToString() + ". <br />");
-        sb.Append("Your arrival date is " + user.ArrivalDate.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + ", and your departure date is " + user.DepartureDate.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + ".<br />");
-        sb.Append("Your plan for presentation is " + user.Presentation + ".<br />");
-        sb.Append("The room type you chose is " + user.Hotel + " " + user.RoomType + ", the number of rooms you booked is  " + user.BookingRoom + ", and the cost of per room is  " + user.UnitPrice + ".<br />");
-        sb.Append("Your checkin date is " + user.CheckIn.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + ", and your checkout date  is " + user.CheckOut.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + ".<br />");
-        sb.Append("The topic of your presentation is " + user.Data + ", and the file you suploaded is " + user.FileName  + ".");
+        sb.Append("Hello <span style=\"color:#86b239;\">" + user.Name + "</span>! <br />");
+        sb.Append("Your ID is <span style=\"color:#86b239;\">" + user.UserID + "</span>.<br />");
+        sb.Append("The Category of Participation you chose is <span style=\"color:#86b239;\">" + user.Participation + "</span>, the number of accompanying people you chose is <span style=\"color:#86b239;\">" + user.Accompanying.ToString() + "</span>, and the total amount of registration fee is <span style=\"color:#86b239;\">" + user.TotalFee.ToString() + "</span>. <br />");
+        sb.Append("Your arrival date is <span style=\"color:#86b239;\">" + user.ArrivalDate.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + "</span>, and your departure date is <span style=\"color:#86b239;\">" + user.DepartureDate.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + "</span>.<br />");
+        sb.Append("Your plan for presentation is <span style=\"color:#86b239;\">" + user.Presentation + "</span>.<br />");
+        sb.Append("The room type you chose is <span style=\"color:#86b239;\">" + user.Hotel + "&nbsp;" + user.RoomType + "</span>, the number of rooms you booked is <span style=\"color:#86b239;\">" + user.BookingRoom + "</span>, and the cost of per room is <span style=\"color:#86b239;\">" + user.UnitPrice + "</span>.<br />");
+        sb.Append("Your checkin date is <span style=\"color:#86b239;\">" + user.CheckIn.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + "</span>, and your checkout date is <span style=\"color:#86b239;\">" + user.CheckOut.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + "</span>.<br />");
+        sb.Append("The topic of your presentation is <span style=\"color:#86b239;\">" + user.Data + "</span>, and the file you suploaded is <span style=\"color:#86b239;\">" + user.FileName + "</span>.<br />");
         sb.Append("If the information you submitted(listed above) is correct, there's no need to reply this email. Please remember to pay your fees within 7 days, thank you for your participation.");
 
-         string to  = user.EMail;   //用户的邮箱
-         string title = "Congratulation, you have successfully register to ISABC12, the following message is your infomation.";     //邮件Title
+        string emailSetPath = CommonClass.GetWebFullPath() + "App_Data\\Config\\SetEmail.xml";
+        XmlUtil util = new XmlUtil(emailSetPath);    //读取配置文件
+
+        string to  = user.EMail;   //用户的邮箱
         string content = sb.ToString();     //邮件正文
-        string strHost = "smtp.sysu.edu.cn";    //邮件smtp服务器
-        string strAccount = "isabc12";    //发送方邮箱账号
-        string strPwd = "zmzzql";      //发送方邮箱密码
-        string strFrom = "isabc12@mail.sysu.edu.cn";       //发送方邮箱名称
+        string title = util.Read("EmailConfig/EmailTitle").Trim();  //邮件标题
+        string strHost = util.Read("EmailConfig/EmailHost").Trim(); //邮件smtp服务器
+        string strAccount = util.Read("EmailConfig/EmailAccount").Trim();   //发送方邮箱账号
+        string strPwd = util.Read("EmailConfig/EmailPwd").Trim();   //发送方邮箱密码
+        string strFrom = util.Read("EmailConfig/EmailFrom").Trim(); //邮件发送方的邮箱地址
 
         bool emailResult = sendMail(to, title, content, strHost, strAccount, strPwd, strFrom);
         return emailResult;
