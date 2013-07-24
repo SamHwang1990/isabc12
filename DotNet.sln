@@ -1,0 +1,74 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{9C781659-5863-4320-AAE6-B4ED6C79AAA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "Util\Util.csproj", "{EC6B1BDE-B82F-49D4-8B8F-EA05E0B4D942}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{40348397-ED28-4BFD-B4A3-E3AF66BC7F89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{B8FD49DC-5007-4439-B565-B5AB07659706}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Web", "Web", "{F65A6750-73BC-4440-BEA2-C1EB49028014}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = ""
+		SccAuxPath = ""
+		SccLocalPath = ""
+		SccProvider = ""
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		ProjectReferences = "{40348397-ED28-4BFD-B4A3-E3AF66BC7F89}|Hope.BLL.dll;{EC6B1BDE-B82F-49D4-8B8F-EA05E0B4D942}|Hope.Util.dll;{9C781659-5863-4320-AAE6-B4ED6C79AAA6}|Hope.Model.dll;{B8FD49DC-5007-4439-B565-B5AB07659706}|Hope.DAL.dll;{D1F40ED6-FAA1-4B15-94C3-7A5322088C55}|Hope.TemplateUtil.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/Web"
+		Debug.AspNetCompiler.PhysicalPath = "Web\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Web\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/Web"
+		Release.AspNetCompiler.PhysicalPath = "Web\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Web\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "1060"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateUtil", "TemplateUtil\TemplateUtil.csproj", "{D1F40ED6-FAA1-4B15-94C3-7A5322088C55}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C781659-5863-4320-AAE6-B4ED6C79AAA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C781659-5863-4320-AAE6-B4ED6C79AAA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C781659-5863-4320-AAE6-B4ED6C79AAA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C781659-5863-4320-AAE6-B4ED6C79AAA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC6B1BDE-B82F-49D4-8B8F-EA05E0B4D942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC6B1BDE-B82F-49D4-8B8F-EA05E0B4D942}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC6B1BDE-B82F-49D4-8B8F-EA05E0B4D942}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC6B1BDE-B82F-49D4-8B8F-EA05E0B4D942}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40348397-ED28-4BFD-B4A3-E3AF66BC7F89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40348397-ED28-4BFD-B4A3-E3AF66BC7F89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40348397-ED28-4BFD-B4A3-E3AF66BC7F89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40348397-ED28-4BFD-B4A3-E3AF66BC7F89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8FD49DC-5007-4439-B565-B5AB07659706}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8FD49DC-5007-4439-B565-B5AB07659706}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8FD49DC-5007-4439-B565-B5AB07659706}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8FD49DC-5007-4439-B565-B5AB07659706}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F65A6750-73BC-4440-BEA2-C1EB49028014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F65A6750-73BC-4440-BEA2-C1EB49028014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F65A6750-73BC-4440-BEA2-C1EB49028014}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{F65A6750-73BC-4440-BEA2-C1EB49028014}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{D1F40ED6-FAA1-4B15-94C3-7A5322088C55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1F40ED6-FAA1-4B15-94C3-7A5322088C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1F40ED6-FAA1-4B15-94C3-7A5322088C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1F40ED6-FAA1-4B15-94C3-7A5322088C55}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

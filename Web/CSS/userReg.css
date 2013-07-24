@@ -1,0 +1,43 @@
+﻿/* File Created: 五月 12, 2013 */
+body,html{margin:0;padding:0;background-color:rgb(238,238,238);font-family: "Times New Roman", Times, serif;font-size: 14px;}
+h1{ margin:0;}
+a{ text-decoration:none;}
+.divcenter{ width:960px; margin-left:auto;margin-right:auto;}
+.header{ height:215px;width: 960px;
+background-image:url(../Images/User/banner_C_otmzd.jpg);
+	background-repeat: no-repeat;}
+#main h1{ line-height:60px;color:#070;}
+#main .nav a{font-size:14px; margin-right:25px;color:#070;}
+#main{background-color:#FFF;}
+#main hr{margin-left:-30px;}
+#main form{ margin-left: 230px; position: relative}
+#main  table{ margin-top:30px;}
+#main  table tr td{ height:25px;}
+#main  table tr td:first-child{ text-align:right;}
+#main  .s_form{ margin-left:150px;}
+#main  .s_form input{ margin-left:30px;height: 21px;}
+table span.err{ color: #ff4500;}
+#tab .ui-state-focus a{ border:0 !important;}
+#tab{border: 0;}
+#tab ul{background-color:#fff; border: 0;height: 3em;}
+#txtTotalFee{ border:none;}
+#tab table .redonly-from{ border: none;}
+#tab table{ margin-bottom: 1em;}
+#tab #tab3 table td{ text-align: left}
+#fileWrap
+{
+    position:relative;
+    width:400px;
+    height:35px;
+    margin-bottom:10px;
+}
+#fileToUpload
+{
+    position:absolute;left:0;top:0;width:70px;height:30px;line-height:30px;opacity:0;filter:alpha(opacity:0);cursor:pointer;
+    }
+ .ipt_text{width:174px;height:28px;line-height:28px;border:1px solid #aaa;}
+.btn{width:70px;height:30px;line-height:30px;border:1px solid #aaa;cursor:pointer;}
+#fileName{ width: 30em;}
+#filePath{ width: 50em;}
+.footer{ height:42px; text-align:center; border:1px solid #999; background-color:#FFF;}
+span.required{color:Red;}

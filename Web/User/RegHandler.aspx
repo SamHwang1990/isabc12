@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RegHandler.aspx.cs" Inherits="User_RegHandler" %>
