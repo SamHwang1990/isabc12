@@ -75,6 +75,7 @@
 <strong><a href="http://www.mozilla.org/en-US/firefox/all/">Firefox</a></strong>, 
 <strong><a href="https://www.google.com/intl/en/chrome/browser/">Chrome</a></strong>, 
 <strong><a href="http://www.microsoft.com/en-us/download/internet-explorer.aspx">8 or higher version of IE</a></strong>to finish the table. If it still doesn't work, please <strong><a href="mailto:isabc12@mail.sysu.edu.cn">contact us</a></strong>.</p>
+<p><strong>Please be noted that the items marked with red asterisks are required to fill in.</strong></p>
             <div id="tab">
                 <ul>
                     <li><a href="#tab1">Registration</a></li>
@@ -89,7 +90,7 @@
                                 <span class="required">*</span>First Name:
                             </td>
                             <td>
-                                <input type="text" name="UserFirstName" id="txtUserFirstName" runat="server" />
+                                <input name="txtUserFirstName" type="text" id="txtUserFirstName" />
                             </td>
                         </tr>
                         <tr>
@@ -97,7 +98,7 @@
                                <span class="required">*</span>Last Name:
                             </td>
                             <td>
-                                <input type="text" name="UserFamilyName" id="txtUserFamilyName" runat="server" />
+                                <input name="txtUserFamilyName" type="text" id="txtUserFamilyName" />
                             </td>
                         </tr>
                         <tr>
@@ -184,6 +185,7 @@
                                 <input type="text" name="Fax" id="txtFax" />
                             </td>
                         </tr>
+                        <!--
                         <tr>
                             <td>
                                 Arrival Date:
@@ -200,6 +202,7 @@
                                 <input type="text" class="dateType" name="DepartureDate" id="txtDepartureDate" onClick="WdatePicker({lang:'en'})" />YYYY-MM-DD(e.g.2013-08-22)
                             </td>
                         </tr>
+                        -->
                         <tr>
                             <td>
                                 <span class="required">*</span>Plan for Presentation:
@@ -211,6 +214,7 @@
                                     <option value="Invited Lecture">Invited Lecture</option>
                                     <option value="Oral Report">Oral Report</option>
                                     <option value="Poster">Poster</option>
+                                    <option value="No">No</option>
                                 </select>
                             </td>
                         </tr>
@@ -229,8 +233,6 @@
                             <td>
                                 <select name="PaymentMode" id="SelPaymentMode">
                                     <option value="transfer" selected="selected">Bank Transfer</option>
-                                    <option value="card">Credit Card</option>
-                                    <option value="cash">Cash</option>
                                 </select>
                                 <span id="MyAccount">3602000309000507804</span>
                             </td>
@@ -273,7 +275,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="required">*</span>Booking Room:
+                                <span class="required">*</span>Number of room:
                             </td>
                             <td>
                                 <input type="text" name="BookingRoom" id="txtBookingRoom" />
@@ -297,7 +299,7 @@
                         </tr>
                         <tr>
                            <strong>
-                            The Accommodation fee will be charged by Hotel.
+                            The Accommodation fee will be charged by Hotel. <span class="required">If you don't want to check in these hotels, please fill 0 in 'Booking Room' row.</span>
                            </strong>
                         </tr>
                         <tr>
@@ -402,14 +404,14 @@
                                 Fax:</td><td><span class="preFax"></span>
                             </td>
                         </tr>
-
+                        <!--
                         <tr>
                             <td>Arrival Date:</td><td><span class="preArrival"></span></td>
                         </tr>
                         <tr>
                             <td>Departure Date:</td><td><span class="preDeparture"></span></td>
                         </tr>
-
+                        -->
                         <tr>
                             <td>Plan for Presentation:</td><td><span class="prePlan"></span></td>
                         </tr>
@@ -627,8 +629,10 @@
 		$(".prePhone").text($("#txtPhone").val());
 		$(".preEmail").text($("#txtEmail").val());
 		$(".preFax").text($("#txtFax").val());
-		$(".preArrival").text($("#txtArrivalDate").val());
+		/*
+        $(".preArrival").text($("#txtArrivalDate").val());
 		$(".preDeparture").text($("#txtDepartureDate").val());
+        */
 		$(".prePlan").text($("#selPrePlan").val());
 		$(".preTotalFee").text($("#txtTotalFee").val());
 		$(".prePayment").text($("#SelPaymentMode").val());

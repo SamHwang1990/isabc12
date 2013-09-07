@@ -173,8 +173,10 @@ function RegSubmit(){
 	var phone = $("#txtPhone").val();
 	var email = $("#txtEmail").val();
 	var fax = $("#txtFax").val();
+    /*
 	var arriveDate = $("#txtArrivalDate").val();
 	var departureDate = $("#txtDepartureDate").val();
+    */
 	var presentationPlan = $("#selPrePlan").val();
 	var totalFee = $("#txtTotalFee").val();
 	var modePay = $("#SelPaymentMode").val();
@@ -192,7 +194,7 @@ function RegSubmit(){
 	
 	var ajaxData = "Name="+name+"&Gender="+gender+"&Title="+title+"&Participation="+participate+"&Accompany="+accompany+
 	"&InstitutionName="+institutionName+"&InstitutionAddr="+institutionAddr+"&Phone="+phone+"&Email="+email+"&Fax="+fax+
-	"&ArriveDate="+arriveDate+"&DepartDate="+departureDate+"&PrePlan="+presentationPlan+"&TotalFee="+totalFee+"&PaymentMode="+modePay+
+	"&PrePlan="+presentationPlan+"&TotalFee="+totalFee+"&PaymentMode="+modePay+
 	"&Hotel=" + hotel + "&RoomType=" + roomType + "&UnitPrice=" + unitPrice + "&AvailableRoom=" + available + "&BookingRoom=" + book + "&CheckIn=" + checkIn +
 	"&CheckOut="+checkOut+"&fileName="+fileName+"&filePath="+filePath+"&fileType="+fileType+"&fileTopic="+ fileTopic;
 	$.ajax({

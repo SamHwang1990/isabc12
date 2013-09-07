@@ -29,3 +29,8 @@ H:\Sam\Hope\Projects\04-ISABC\DotNet\Util\bin\Debug\Hope.Util.dll
 H:\Sam\Hope\Projects\04-ISABC\DotNet\Util\bin\Debug\Hope.Util.pdb
 H:\Sam\Hope\Projects\04-ISABC\DotNet\Util\obj\Debug\Hope.Util.dll
 H:\Sam\Hope\Projects\04-ISABC\DotNet\Util\obj\Debug\Hope.Util.pdb
+D:\Programs\Code\isabc12\Code\DotNet\Util\bin\Debug\Hope.Util.dll
+D:\Programs\Code\isabc12\Code\DotNet\Util\bin\Debug\Hope.Util.pdb
+D:\Programs\Code\isabc12\Code\DotNet\Util\obj\Debug\ResolveAssemblyReference.cache
+D:\Programs\Code\isabc12\Code\DotNet\Util\obj\Debug\Hope.Util.dll
+D:\Programs\Code\isabc12\Code\DotNet\Util\obj\Debug\Hope.Util.pdb

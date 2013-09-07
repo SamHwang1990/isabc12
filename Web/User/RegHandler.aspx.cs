@@ -40,8 +40,10 @@ public partial class User_RegHandler : System.Web.UI.Page
         string phone = RequestUtil.RequestString(Request, "Phone", "");
         string email = RequestUtil.RequestString(Request, "Email", "");
         string fax = RequestUtil.RequestString(Request, "Fax", "");
-        DateTime ArriveDate = RequestUtil.RequestDatetime(Request, "ArriveDate", DateTime.Now);
-        DateTime DepartDate = RequestUtil.RequestDatetime(Request, "DepartDate", DateTime.Now);
+        //DateTime ArriveDate = RequestUtil.RequestDatetime(Request, "ArriveDate", DateTime.Now);
+        //DateTime DepartDate = RequestUtil.RequestDatetime(Request, "DepartDate", DateTime.Now);
+        DateTime ArriveDate = DateTime.Now;
+        DateTime DepartDate = DateTime.Now;
         string PrePlan = RequestUtil.RequestString(Request, "PrePlan", "");
         string TotalFee = RequestUtil.RequestString(Request, "TotalFee", "");
         string PaymentMode = RequestUtil.RequestString(Request, "PaymentMode", "");
@@ -155,7 +157,7 @@ public partial class User_RegHandler : System.Web.UI.Page
         sb.Append("Hello <span style=\"color:#86b239;\">" + user.Name + "</span>! <br />");
         sb.Append("Your ID is <span style=\"color:#86b239;\">" + user.UserID + "</span>.<br />");
         sb.Append("The Category of Participation you chose is <span style=\"color:#86b239;\">" + user.Participation + "</span>, the number of accompanying people you chose is <span style=\"color:#86b239;\">" + user.Accompanying.ToString() + "</span>, and the total amount of registration fee is <span style=\"color:#86b239;\">" + user.TotalFee.ToString() + "</span>. <br />");
-        sb.Append("Your arrival date is <span style=\"color:#86b239;\">" + user.ArrivalDate.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + "</span>, and your departure date is <span style=\"color:#86b239;\">" + user.DepartureDate.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + "</span>.<br />");
+        //sb.Append("Your arrival date is <span style=\"color:#86b239;\">" + user.ArrivalDate.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + "</span>, and your departure date is <span style=\"color:#86b239;\">" + user.DepartureDate.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + "</span>.<br />");
         sb.Append("Your plan for presentation is <span style=\"color:#86b239;\">" + user.Presentation + "</span>.<br />");
         sb.Append("The room type you chose is <span style=\"color:#86b239;\">" + user.Hotel + "&nbsp;" + user.RoomType + "</span>, the number of rooms you booked is <span style=\"color:#86b239;\">" + user.BookingRoom + "</span>, and the cost of per room is <span style=\"color:#86b239;\">" + user.UnitPrice + "</span>.<br />");
         sb.Append("Your checkin date is <span style=\"color:#86b239;\">" + user.CheckIn.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + "</span>, and your checkout date is <span style=\"color:#86b239;\">" + user.CheckOut.ToString("dddd,dd MMMM,yyyy", new System.Globalization.DateTimeFormatInfo()) + "</span>.<br />");
