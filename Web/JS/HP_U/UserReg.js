@@ -1,4 +1,9 @@
 ﻿var $ = jQuery.noConflict();
+if (typeof String.prototype.trim !== 'function') {
+    String.prototype.trim = function () {
+        return this.replace(/^\s+|\s+$/g, '');
+    }
+}
 
 function SetFileName() {
     var fileName = document.getElementById("fileToUpload").value;
@@ -27,10 +32,12 @@ function checkType() {
     //    }
     if (extension == ".doc" || extension == ".docx") {
         ajaxFileUpload();
+        return true;
+    }
+    else {
+        alert(".doc or .docx only");
         return false;
     }
-    alert(".doc or .docx only");
-    return false;
 }
 
 //获取选取的Participation值

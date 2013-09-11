@@ -8,7 +8,7 @@
 (function () {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    var pageSize = 15;
+    var pageSize = 20;
     var sm = new Ext.grid.CheckboxSelectionModel();
     var cm = new Ext.grid.ColumnModel([sm, {
         header: "ID",
@@ -43,7 +43,7 @@
             dataIndex: "InstitutionName",
             //可以进行排序
             sortable: true
-        }, 
+        },
         {
             header: "机构地址",
             dataIndex: "InstitutionAddr",
@@ -63,17 +63,57 @@
             sortable: true
         },
         {
+            header: "Check In",
+            dataIndex: "CheckIn",
+            sortable: true
+        },
+        {
+            header: "Check Out",
+            dataIndex: "CheckOut",
+            sortable: true
+        },
+        {
+            header: "Presentation",
+            dataIndex: "Presentation",
+            sortable: false
+        },
+        {
+            header: "付款方式",
+            dataIndex: "PaymentMode",
+            sortable: false
+        },
+        {
             header: "总费用",
             dataIndex: "TotalFee",
             //可以进行排序
             sortable: true
         },
         {
-            header: "备注",
-            dataIndex: "Remark"
+            header: "酒店名称",
+            dataIndex: "Hotel",
+            //可以进行排序
+            sortable: true
+        },
+        {
+            header: "房间类型",
+            dataIndex: "RoomType",
+            //可以进行排序
+            sortable: true
+        },
+        {
+            header: "房间价格",
+            dataIndex: "UnitPrice",
+            //可以进行排序
+            sortable: true
+        },
+        {
+            header: "摘要文件名",
+            dataIndex: "FileName",
+            //可以进行排序
+            sortable: false
         }]);
-        var fields = ["UserID", "Name",  "Title", "Gender","Participation", "Accompanying", "InstitutionName", "InstitutionAddr"
-        ,"Phone","EMail","ArrivalDate","DepartureDate","Presentation","PaymentMode","TotalFee"];
+    var fields = ["UserID", "Name", "Title", "Gender", "Participation", "Accompanying", "InstitutionName", "InstitutionAddr"
+        , "Phone", "EMail", "CheckIn", "CheckOut", "Presentation", "PaymentMode", "TotalFee", "Hotel", "RoomType", "BookingRoom", "UnitPrice", "FileName"];
     var store = new Ext.data.Store({
         proxy: new Ext.data.HttpProxy({
             url: "GetUserList.aspx",
@@ -129,421 +169,442 @@
                 //导出用户
                 exportUser();
             }
+        },
+        "", "-", "", {
+            text: "删除",
+            tooltip: "删除管理员",
+            iconCls: "deleteicon",
+            handler: function () {
+                var rows = grid.getSelectionModel().getSelections();
+                if (rows.length == 0) {
+                    Ext.Msg.alert("提示", "请选中要删除的用户!");
+                    return;
+                }
+                Ext.Msg.confirm("提示", "确定要删除选定的用户？",
+                        function (btn) {
+                            if (btn == "yes") {
+                                deleteUser(rows);
+                            }
+                            // else{
+                            // Ext.Msg.alert("提示", "放弃删除");
+                            // }
+                        });
+            }
         }]
     });
-     var exportUser = function(){
-         window.location.href = Ext.CONTEXT + '/../../../Ajax/Export.ashx?method=exportUserList'; 
+    var exportUser = function () {
+        window.location.href = Ext.CONTEXT + '/../../../Ajax/Export.ashx?method=exportUserList';
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //编辑用户的表单
-//    var roleStore = new Ext.data.Store({
-//        proxy: new Ext.data.HttpProxy({
-//            url: '../RoleMgr/GetRoleList.aspx'
-//        }),
-//        reader: new Ext.data.JsonReader({
-//            root: 'root',
-//            id: 'RoleID'
-//        },
-//            [
-//                {
-//                    name: 'RoleID',
-//                    mapping: 'RoleID'
-//                },
-//                {
-//                    name: 'RoleName',
-//                    mapping: 'RoleName'
-//                },
-//                {
-//                    name: 'Remark',
-//                    mapping: 'Remark'
-//                }
-//            ])
-//    });
-//    roleStore.load();
-//    var editForm = new Ext.form.FormPanel({
-//        width: 315,
-//        height: 270,
-//        plain: true,
-//        layout: "form",
-//        defaultType: "textfield",
-//        labelWidth: 45,
-//        baseCls: "x-plain",
-//        defaults: {
-//            anchor: "95%",
-//            msgTarget: "side"
-//        },
-//        buttonAlign: "center",
-//        bodyStyle: "padding:0 0 0 0",
-//        items: [
-//            {
-//                name: "UserName",
-//                fieldLabel: "帐号",
-//                allowBlank: false,
-//                readOnly: true,
-//                blankText: "帐号不允许为空"
-//            },
-//            {
-//                name: "Password",
-//                fieldLabel: "密码",
-//                inputType: "password"
-//            },
-//            {
-//                name: "Status",
-//                xtype: "combo",
-//                fieldLabel: "状态",
-//                editable: false,
-//                typeAhead: true,
-//                //传入后台真实值value field /value
-//                hiddenName: "Status",
-//                mode: "local",
-//                displayField: "show",
-//                valueField: "value",
-//                triggerAction: "all",
-//                value: "0",
-//                store: new Ext.data.SimpleStore({
-//                    fields: ["show", "value"],
-//                    data: [
-//                        ["正常", "True"],
-//                        ["禁用", "False"]
-//                    ]
-//                })
-//            },
-//            {
-//                xtype: "combo",
-//                store: roleStore,
-//                typeAhead: true,
-//                fieldLabel: '角色',
-//                hiddenName: 'RoleID',
-//                name: 'RoleID',
-//                forceSelection: true,
-//                triggerAction: 'all',
-//                emptyText: '选择角色类型',
-//                selectOnFocus: true,
-//                width: 130,
-//                editable: false,
-//                allowBlank: false,
-//                blankText: '请选择角色类型',
-//                displayField: 'RoleName',
-//                valueField: 'RoleID',
-//                mode: 'remote'
-//            },
-//            {
-//                xtype: "textarea",
-//                name: "Remark",
-//                fieldLabel: "备注"
-//            }
-//        ]
-//    });
+    //    var roleStore = new Ext.data.Store({
+    //        proxy: new Ext.data.HttpProxy({
+    //            url: '../RoleMgr/GetRoleList.aspx'
+    //        }),
+    //        reader: new Ext.data.JsonReader({
+    //            root: 'root',
+    //            id: 'RoleID'
+    //        },
+    //            [
+    //                {
+    //                    name: 'RoleID',
+    //                    mapping: 'RoleID'
+    //                },
+    //                {
+    //                    name: 'RoleName',
+    //                    mapping: 'RoleName'
+    //                },
+    //                {
+    //                    name: 'Remark',
+    //                    mapping: 'Remark'
+    //                }
+    //            ])
+    //    });
+    //    roleStore.load();
+    //    var editForm = new Ext.form.FormPanel({
+    //        width: 315,
+    //        height: 270,
+    //        plain: true,
+    //        layout: "form",
+    //        defaultType: "textfield",
+    //        labelWidth: 45,
+    //        baseCls: "x-plain",
+    //        defaults: {
+    //            anchor: "95%",
+    //            msgTarget: "side"
+    //        },
+    //        buttonAlign: "center",
+    //        bodyStyle: "padding:0 0 0 0",
+    //        items: [
+    //            {
+    //                name: "UserName",
+    //                fieldLabel: "帐号",
+    //                allowBlank: false,
+    //                readOnly: true,
+    //                blankText: "帐号不允许为空"
+    //            },
+    //            {
+    //                name: "Password",
+    //                fieldLabel: "密码",
+    //                inputType: "password"
+    //            },
+    //            {
+    //                name: "Status",
+    //                xtype: "combo",
+    //                fieldLabel: "状态",
+    //                editable: false,
+    //                typeAhead: true,
+    //                //传入后台真实值value field /value
+    //                hiddenName: "Status",
+    //                mode: "local",
+    //                displayField: "show",
+    //                valueField: "value",
+    //                triggerAction: "all",
+    //                value: "0",
+    //                store: new Ext.data.SimpleStore({
+    //                    fields: ["show", "value"],
+    //                    data: [
+    //                        ["正常", "True"],
+    //                        ["禁用", "False"]
+    //                    ]
+    //                })
+    //            },
+    //            {
+    //                xtype: "combo",
+    //                store: roleStore,
+    //                typeAhead: true,
+    //                fieldLabel: '角色',
+    //                hiddenName: 'RoleID',
+    //                name: 'RoleID',
+    //                forceSelection: true,
+    //                triggerAction: 'all',
+    //                emptyText: '选择角色类型',
+    //                selectOnFocus: true,
+    //                width: 130,
+    //                editable: false,
+    //                allowBlank: false,
+    //                blankText: '请选择角色类型',
+    //                displayField: 'RoleName',
+    //                valueField: 'RoleID',
+    //                mode: 'remote'
+    //            },
+    //            {
+    //                xtype: "textarea",
+    //                name: "Remark",
+    //                fieldLabel: "备注"
+    //            }
+    //        ]
+    //    });
 
-//    //添加用户的表单
-//    var addForm = new Ext.form.FormPanel({
-//        width: 315,
-//        height: 270,
-//        plain: true,
-//        layout: "form",
-//        defaultType: "textfield",
-//        labelWidth: 45,
-//        labelAlign: "right",
-//        baseCls: "x-plain",
-//        defaults: {
-//            anchor: "95%",
-//            msgTarget: "side"
-//        },
-//        buttonAlign: "center",
-//        bodyStyle: "padding:0 0 0 0",
-//        items: [
-//            {
-//                name: "UserName",
-//                fieldLabel: "帐号",
-//                allowBlank: false,
-//                blankText: "帐号不允许为空"
-//            },
-//            {
-//                name: "Password",
-//                id: "Password",
-//                fieldLabel: "密码",
-//                allowBlank: false,
-//                blankText: "密码不能为空",
-//                inputType: "password"
-//            },
-//            {
-//                name: "CmfPassword",
-//                id: "CmfPassword",
-//                fieldLabel: "确认",
-//                inputType: "password",
-//                allowBlank: false,
-//                blankText: "确认密码不能为空",
-//                invalidText: '两次密码不一致！',
-//                validator: function () {
-//                    return Ext.get('Password').dom.value == Ext.get('CmfPassword').dom.value;
-//                }
-//            },
-//            {
+    //    //添加用户的表单
+    //    var addForm = new Ext.form.FormPanel({
+    //        width: 315,
+    //        height: 270,
+    //        plain: true,
+    //        layout: "form",
+    //        defaultType: "textfield",
+    //        labelWidth: 45,
+    //        labelAlign: "right",
+    //        baseCls: "x-plain",
+    //        defaults: {
+    //            anchor: "95%",
+    //            msgTarget: "side"
+    //        },
+    //        buttonAlign: "center",
+    //        bodyStyle: "padding:0 0 0 0",
+    //        items: [
+    //            {
+    //                name: "UserName",
+    //                fieldLabel: "帐号",
+    //                allowBlank: false,
+    //                blankText: "帐号不允许为空"
+    //            },
+    //            {
+    //                name: "Password",
+    //                id: "Password",
+    //                fieldLabel: "密码",
+    //                allowBlank: false,
+    //                blankText: "密码不能为空",
+    //                inputType: "password"
+    //            },
+    //            {
+    //                name: "CmfPassword",
+    //                id: "CmfPassword",
+    //                fieldLabel: "确认",
+    //                inputType: "password",
+    //                allowBlank: false,
+    //                blankText: "确认密码不能为空",
+    //                invalidText: '两次密码不一致！',
+    //                validator: function () {
+    //                    return Ext.get('Password').dom.value == Ext.get('CmfPassword').dom.value;
+    //                }
+    //            },
+    //            {
 
-//                name: "Status",
-//                xtype: "combo",
-//                fieldLabel: "状态",
-//                //传入后台真实值value field /value
-//                hiddenName: "Status",
-//                editable: false,
-//                mode: "local",
-//                displayField: "show",
-//                valueField: "value",
-//                triggerAction: "all",
-//                value: "False",
-//                store: new Ext.data.SimpleStore({
-//                    fields: ["show", "value"],
-//                    data: [
-//                        ["正常", "True"],
-//                        ["禁用", "False"]
-//                    ]
-//                })
-//            },
-//            {
-//                xtype: "combo",
-//                store: roleStore,
-//                typeAhead: true,
-//                fieldLabel: '角色',
-//                hiddenName: 'RoleID',
-//                name: 'RoleID',
-//                forceSelection: true,
-//                triggerAction: 'all',
-//                emptyText: '选择角色类型',
-//                selectOnFocus: true,
-//                width: 130,
-//                editable: false,
-//                allowBlank: false,
-//                blankText: '请选择角色类型',
-//                displayField: 'RoleName',
-//                valueField: 'RoleID',
-//                mode: 'remote'
-//            }
-//        ]
-//    });
+    //                name: "Status",
+    //                xtype: "combo",
+    //                fieldLabel: "状态",
+    //                //传入后台真实值value field /value
+    //                hiddenName: "Status",
+    //                editable: false,
+    //                mode: "local",
+    //                displayField: "show",
+    //                valueField: "value",
+    //                triggerAction: "all",
+    //                value: "False",
+    //                store: new Ext.data.SimpleStore({
+    //                    fields: ["show", "value"],
+    //                    data: [
+    //                        ["正常", "True"],
+    //                        ["禁用", "False"]
+    //                    ]
+    //                })
+    //            },
+    //            {
+    //                xtype: "combo",
+    //                store: roleStore,
+    //                typeAhead: true,
+    //                fieldLabel: '角色',
+    //                hiddenName: 'RoleID',
+    //                name: 'RoleID',
+    //                forceSelection: true,
+    //                triggerAction: 'all',
+    //                emptyText: '选择角色类型',
+    //                selectOnFocus: true,
+    //                width: 130,
+    //                editable: false,
+    //                allowBlank: false,
+    //                blankText: '请选择角色类型',
+    //                displayField: 'RoleName',
+    //                valueField: 'RoleID',
+    //                mode: 'remote'
+    //            }
+    //        ]
+    //    });
 
-//    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    //编辑用户
-//    function editUser(row) {
-//        var win = new Ext.Window({
-//            title: "编辑用户",
-//            width: 400,
-//            height: 250,
-//            plain: true,
-//            layout: "fit",
-//            iconCls: "addicon",
-//            //不可以随意改变大小
-//            resizable: false,
-//            //是否可以拖动
-//            draggable: true,
-//            defaultType: "textfield",
-//            labelWidth: 100,
-//            collapsible: true,
-//            //允许缩放条
-//            closeAction: 'hide',
-//            closable: true,
-//            plain: true,
-//            //弹出模态窗体
-//            modal: 'true',
-//            buttonAlign: "center",
-//            bodyStyle: "padding:10px 0 0 15px",
-//            items: editForm,
-//            listeners: {
-//                "show": function () {
-//                    //当window show事件发生时清空一下表单
-//                    editForm.getForm().loadRecord(row);
-//                    // console.log(row);
-//                }
-//            },
-//            buttons: [
-//                {
-//                    text: "保存信息",
-//                    minWidth: 70,
-//                    handler: function () {
-//                        if (editForm.getForm().isValid()) {
-//                            //弹出效果
-//                            Ext.MessageBox.show({
-//                                msg: '正在保存，请稍等...',
-//                                progressText: 'Saving...',
-//                                width: 300,
-//                                wait: true,
-//                                waitConfig: {
-//                                    interval: 100
-//                                },
-//                                icon: 'download',
-//                                animEl: 'saving'
-//                            });
-//                            editForm.form.submit({
-//                                url: "EditUser.aspx",
-//                                method: "POST",
-//                                success: function (form, action) {
-//                                    var flag = action.result.success;
-//                                    if (flag == "true") {
-//                                        Ext.MessageBox.alert("恭喜", action.result.Text,
-//                                            function () {
-//                                                store.load({
-//                                                    params: {
-//                                                        start: 0,
-//                                                        limit: pageSize
-//                                                    }
-//                                                });
-//                                                win.hide();
-//                                            });
-//                                    }
-//                                },
-//                                failure: function (form, action) {
-//                                    Ext.MessageBox.alert("提示!", "保存失败");
-//                                }
-//                            });
-//                        }
-//                    }
-//                },
-//                {
-//                    text: "重置",
-//                    minWidth: 70,
-//                    qtip: "重置数据",
-//                    handler: function () {
-//                        editForm.getForm().loadRecord(row);
-//                    }
-//                },
-//                {
-//                    text: "取 消",
-//                    minWidth: 70,
-//                    handler: function () {
-//                        win.hide();
-//                    }
-//                }
-//            ]
-//        });
-//        win.show();
-//    }
+    //    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //    //编辑用户
+    //    function editUser(row) {
+    //        var win = new Ext.Window({
+    //            title: "编辑用户",
+    //            width: 400,
+    //            height: 250,
+    //            plain: true,
+    //            layout: "fit",
+    //            iconCls: "addicon",
+    //            //不可以随意改变大小
+    //            resizable: false,
+    //            //是否可以拖动
+    //            draggable: true,
+    //            defaultType: "textfield",
+    //            labelWidth: 100,
+    //            collapsible: true,
+    //            //允许缩放条
+    //            closeAction: 'hide',
+    //            closable: true,
+    //            plain: true,
+    //            //弹出模态窗体
+    //            modal: 'true',
+    //            buttonAlign: "center",
+    //            bodyStyle: "padding:10px 0 0 15px",
+    //            items: editForm,
+    //            listeners: {
+    //                "show": function () {
+    //                    //当window show事件发生时清空一下表单
+    //                    editForm.getForm().loadRecord(row);
+    //                    // console.log(row);
+    //                }
+    //            },
+    //            buttons: [
+    //                {
+    //                    text: "保存信息",
+    //                    minWidth: 70,
+    //                    handler: function () {
+    //                        if (editForm.getForm().isValid()) {
+    //                            //弹出效果
+    //                            Ext.MessageBox.show({
+    //                                msg: '正在保存，请稍等...',
+    //                                progressText: 'Saving...',
+    //                                width: 300,
+    //                                wait: true,
+    //                                waitConfig: {
+    //                                    interval: 100
+    //                                },
+    //                                icon: 'download',
+    //                                animEl: 'saving'
+    //                            });
+    //                            editForm.form.submit({
+    //                                url: "EditUser.aspx",
+    //                                method: "POST",
+    //                                success: function (form, action) {
+    //                                    var flag = action.result.success;
+    //                                    if (flag == "true") {
+    //                                        Ext.MessageBox.alert("恭喜", action.result.Text,
+    //                                            function () {
+    //                                                store.load({
+    //                                                    params: {
+    //                                                        start: 0,
+    //                                                        limit: pageSize
+    //                                                    }
+    //                                                });
+    //                                                win.hide();
+    //                                            });
+    //                                    }
+    //                                },
+    //                                failure: function (form, action) {
+    //                                    Ext.MessageBox.alert("提示!", "保存失败");
+    //                                }
+    //                            });
+    //                        }
+    //                    }
+    //                },
+    //                {
+    //                    text: "重置",
+    //                    minWidth: 70,
+    //                    qtip: "重置数据",
+    //                    handler: function () {
+    //                        editForm.getForm().loadRecord(row);
+    //                    }
+    //                },
+    //                {
+    //                    text: "取 消",
+    //                    minWidth: 70,
+    //                    handler: function () {
+    //                        win.hide();
+    //                    }
+    //                }
+    //            ]
+    //        });
+    //        win.show();
+    //    }
 
-//    //添加用户
-//    function addUser() {
-//        var win = new Ext.Window({
-//            title: "添加用户",
-//            width: 400,
-//            height: 250,
-//            plain: true,
-//            iconCls: "addicon",
-//            resizable: false,
-//            draggable: true,
-//            defaultType: "textfield",
-//            labelWidth: 100,
-//            collapsible: true,
-//            closeAction: 'hide',
-//            closable: true,
-//            plain: true,
-//            modal: 'true',
-//            buttonAlign: "center",
-//            bodyStyle: "padding:10px 0 0 15px",
-//            items: addForm,
-//            listeners: {
-//                "show": function () {
-//                    addForm.getForm().reset();
-//                }
-//            },
-//            buttons: [
-//                {
-//                    text: "添加",
-//                    minWidth: 70,
-//                    handler: function () {
-//                        if (addForm.getForm().isValid()) {
-//                            //弹出效果
-//                            Ext.MessageBox.show({
-//                                msg: '正在添加，请稍等...',
-//                                progressText: 'Saving...',
-//                                width: 300,
-//                                wait: true,
-//                                waitConfig: {
-//                                    interval: 100
-//                                },
-//                                icon: 'download',
-//                                animEl: 'saving'
-//                            });
-//                            addForm.getForm().submit({
-//                                url: "AddUser.aspx",
-//                                method: "POST",
-//                                success: function (form, action) {
-//                                    var flag = action.result.success;
-//                                    if (flag == "true") {
-//                                        Ext.MessageBox.alert("提示", action.result.Text,
-//                                            function () {
-//                                                store.load({
-//                                                    params: {
-//                                                        start: 0,
-//                                                        limit: pageSize
-//                                                    }
-//                                                });
-//                                                win.hide();
-//                                            });
-//                                    } else {
-//                                        Ext.MessageBox.alert("提示", action.result.Text);
-//                                    }
-//                                },
-//                                failure: function (form, action) {
-//                                    Ext.MessageBox.alert("提示!", "添加新用户失败!");
-//                                }
-//                            });
-//                        }
-//                    }
-//                },
-//                {
-//                    text: "取 消",
-//                    minWidth: 70,
-//                    handler: function () {
-//                        win.hide();
-//                    }
-//                }
-//            ]
-//        });
-//        win.show();
+    //    //添加用户
+    //    function addUser() {
+    //        var win = new Ext.Window({
+    //            title: "添加用户",
+    //            width: 400,
+    //            height: 250,
+    //            plain: true,
+    //            iconCls: "addicon",
+    //            resizable: false,
+    //            draggable: true,
+    //            defaultType: "textfield",
+    //            labelWidth: 100,
+    //            collapsible: true,
+    //            closeAction: 'hide',
+    //            closable: true,
+    //            plain: true,
+    //            modal: 'true',
+    //            buttonAlign: "center",
+    //            bodyStyle: "padding:10px 0 0 15px",
+    //            items: addForm,
+    //            listeners: {
+    //                "show": function () {
+    //                    addForm.getForm().reset();
+    //                }
+    //            },
+    //            buttons: [
+    //                {
+    //                    text: "添加",
+    //                    minWidth: 70,
+    //                    handler: function () {
+    //                        if (addForm.getForm().isValid()) {
+    //                            //弹出效果
+    //                            Ext.MessageBox.show({
+    //                                msg: '正在添加，请稍等...',
+    //                                progressText: 'Saving...',
+    //                                width: 300,
+    //                                wait: true,
+    //                                waitConfig: {
+    //                                    interval: 100
+    //                                },
+    //                                icon: 'download',
+    //                                animEl: 'saving'
+    //                            });
+    //                            addForm.getForm().submit({
+    //                                url: "AddUser.aspx",
+    //                                method: "POST",
+    //                                success: function (form, action) {
+    //                                    var flag = action.result.success;
+    //                                    if (flag == "true") {
+    //                                        Ext.MessageBox.alert("提示", action.result.Text,
+    //                                            function () {
+    //                                                store.load({
+    //                                                    params: {
+    //                                                        start: 0,
+    //                                                        limit: pageSize
+    //                                                    }
+    //                                                });
+    //                                                win.hide();
+    //                                            });
+    //                                    } else {
+    //                                        Ext.MessageBox.alert("提示", action.result.Text);
+    //                                    }
+    //                                },
+    //                                failure: function (form, action) {
+    //                                    Ext.MessageBox.alert("提示!", "添加新用户失败!");
+    //                                }
+    //                            });
+    //                        }
+    //                    }
+    //                },
+    //                {
+    //                    text: "取 消",
+    //                    minWidth: 70,
+    //                    handler: function () {
+    //                        win.hide();
+    //                    }
+    //                }
+    //            ]
+    //        });
+    //        win.show();
 
-//    }
+    //    }
 
-//    //删除用户
-//    function deleteUser(rows) {
-//        var deletesplit = "";
-//        for (var i = 0; i < rows.length; i++) {
-//            if (rows.length == 1) {
-//                deletesplit = rows[i].data.UserID;
-//            } else {
-//                if (i < (rows.length - 1)) {
-//                    deletesplit = rows[i].data.UserID + "," + deletesplit;
-//                }
-//                if (i == (rows.length - 1)) {
-//                    deletesplit = deletesplit + rows[i].data.UserID;
-//                }
-//            }
-//        }
-//        //弹出效果
-//        Ext.MessageBox.show({
-//            msg: '正在删除，请稍等...',
-//            progressText: 'Saving...',
-//            width: 300,
-//            wait: true,
-//            waitConfig: {
-//                interval: 100
-//            },
-//            icon: 'download',
-//            animEl: 'saving'
-//        });
-//        Ext.Ajax.request({
-//            url: "DeleteUser.aspx",
-//            method: "POST",
-//            params: {
-//                IDs: deletesplit
-//            },
-//            success: function () {
-//                Ext.Msg.alert("提示", "已删除",
-//                    function () {
-//                        store.reload();
-//                    });
-//            },
-//            failure: function () {
-//                Ext.Msg.alert("提示", "删除失败!");
-//            }
-//        });
-//    }
+        //删除用户
+        function deleteUser(rows) {
+            var deletesplit = "";
+            for (var i = 0; i < rows.length; i++) {
+                if (rows.length == 1) {
+                    deletesplit = rows[i].data.UserID;
+                } else {
+                    if (i < (rows.length - 1)) {
+                        deletesplit = rows[i].data.UserID + "," + deletesplit;
+                    }
+                    if (i == (rows.length - 1)) {
+                        deletesplit = deletesplit + rows[i].data.UserID;
+                    }
+                }
+            }
+            //弹出效果
+            Ext.MessageBox.show({
+                msg: '正在删除，请稍等...',
+                progressText: 'Saving...',
+                width: 300,
+                wait: true,
+                waitConfig: {
+                    interval: 100
+                },
+                icon: 'download',
+                animEl: 'saving'
+            });
+            Ext.Ajax.request({
+                url: "DeleteUser.aspx",
+                method: "POST",
+                params: {
+                    IDs: deletesplit
+                },
+                success: function () {
+                    Ext.Msg.alert("提示", "已删除",
+                        function () {
+                            store.reload();
+                        });
+                },
+                failure: function () {
+                    Ext.Msg.alert("提示", "删除失败!");
+                }
+            });
+        }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

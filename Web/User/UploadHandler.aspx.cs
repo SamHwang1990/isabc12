@@ -27,6 +27,13 @@ public partial class User_UploadHandler : System.Web.UI.Page
             if (files[0].ContentLength < 41943040)
             {
                 string fileName = Convert.ToString(files[0].FileName);
+                string slash = "\\";
+                int slashIndex = fileName.LastIndexOf(slash);
+                if(slashIndex >= 0)
+                {
+                    fileName = fileName.Substring(slashIndex+1);
+                }
+
                 string filePath = Convert.ToString(Server.MapPath("~/UploadFiles/")
                         + fileName);
                 string fileType = System.IO.Path.GetExtension(fileName);
